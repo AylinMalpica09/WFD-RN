@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+</head>
+<body>
+    <h1>Wild Fruit Detect</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="capture">Take Photo</button>
+    <canvas id="canvas" width="640" height="480" style="display:none"></canvas>
+    <br>
+    <button id="upload" style="display:none">Upload</button>
+    <br>
+    <div id="result"></div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const captureButton = document.getElementById('capture');
+        const uploadButton = document.getElementById('upload');
+        const resultDiv = document.getElementById('result');
+
+        captureButton.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            video.style.display = 'none';
+            canvas.style.display = 'block';
+            uploadButton.style.display = 'block';
+        });
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(error => {
+                console.error('Error accessing webcam:', error);
+            });
+
+        uploadButton.addEventListener('click', () => {
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('file', blob, 'photo.png');
+
+                fetch('/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(result => {
+                    resultDiv.innerHTML = result;
+                })
+                .catch(error => {
+                    console.error('Error uploading image:', error);
+                });
+            }, 'image/png');
+        });
+    </script>
+</body>
+</html>
