@@ -3,9 +3,10 @@ from keras.models import load_model
 import cv2
 import numpy as np
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/src', static_folder='src')
+
 model = load_model('modelo.h5')
-classes =['fresa','mango']
+classes =['fresa','mora','guayaba','ciruela','calabaza','tomate_v']
 
 def process_image(image):
     img = cv2.imdecode(np.frombuffer(image.read(), np.uint8), cv2.IMREAD_GRAYSCALE)

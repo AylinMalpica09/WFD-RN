@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns 
 
 #Clases y tamaños
-classes =['fresa','mango']
+classes =['fresa','mora','guayaba','ciruela','calabaza','tomate_v']
 num_classes = len(classes)
 img_rows,img_cols = 64,64
 

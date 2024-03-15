@@ -1,61 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Image</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../src/output.css" rel="stylesheet">
+  <script src="../src/js/index2.js" defer></script>
 </head>
 <body>
-    <h1>Wild Fruit Detect</h1>
-    <video id="video" width="640" height="480" autoplay></video>
-    <button id="capture">Take Photo</button>
-    <canvas id="canvas" width="640" height="480" style="display:none"></canvas>
-    <br>
-    <button id="upload" style="display:none">Upload</button>
-    <br>
-    <div id="result"></div>
 
-    <script>
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const captureButton = document.getElementById('capture');
-        const uploadButton = document.getElementById('upload');
-        const resultDiv = document.getElementById('result');
+  <div class="relative bg-indigo-800">
+    <div class="absolute inset-0">
+      <img class="h-full w-full object-cover" src="../src/img/background.jpeg" alt="">
+      <div class="absolute inset-0 bg-indigo-800 mix-blend-multiply" aria-hidden="true"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl py-24 px-6 sm:py-32 lg:px-8">
+      <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">Wild Fruit Detect</h1>
+      <p class="mt-6 max-w-3xl text-xl text-indigo-100">Detector de frutos silvestres</p>
+    </div>
+  </div>
+  <div class="relative bg-white py-16 sm:py-24">
+    
+    <div class="lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:items-start lg:gap-24 lg:px-8">
+      <div class="relative sm:py-16 lg:py-0">
+        <div aria-hidden="true" class="hidden sm:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-screen">
+          <div class="absolute inset-y-0 right-1/2 w-full rounded-r-3xl bg-gray-50 lg:right-72"></div>
+          <svg class="absolute top-8 left-1/2 -ml-3 lg:-right-8 lg:left-auto lg:top-12" width="404" height="392" fill="none" viewBox="0 0 404 392">
+            <defs>
+              <pattern id="02f20b47-fd69-4224-a62a-4c9de5c763f7" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+              </pattern>
+            </defs>
+            <rect width="404" height="392" fill="url(#02f20b47-fd69-4224-a62a-4c9de5c763f7)" />
+          </svg>
+        </div>
+        <div class="relative mx-auto max-w-md px-6 sm:max-w-3xl lg:max-w-none lg:px-0 lg:py-20">
+          <div class="relative overflow-hidden rounded-2xl pb-10 shadow-xl">
+            <video id="video" width="640" height="480" autoplay></video>
+            <br>
+            <canvas id="canvas" width="640" height="480" style="display:none"></canvas>
+            <br>
+            <!--<button id="new-photo" style="display:none">Take New Photo</button>-->
+            <button id="capture" type="button" class="fixed bottom-16 left-1/2 transform -translate-x-1/2 inline-flex items-center rounded-full border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Tomar foto</button>
 
-        captureButton.addEventListener('click', () => {
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            video.style.display = 'none';
-            canvas.style.display = 'block';
-            uploadButton.style.display = 'block';
-        });
+          </div>
 
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-            })
-            .catch(error => {
-                console.error('Error accessing webcam:', error);
-            });
+    
+        </div>
+      </div>
+  
+      <div class="relative mx-auto max-w-md px-6 sm:max-w-3xl lg:px-0">
+        <!-- Content area -->
+        <div class="pt-12 sm:pt-16 lg:pt-20">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Resultado</h2>
+          
+            <br>
+            <div id="result">
+              
+            </div>
+            
+            
 
-        uploadButton.addEventListener('click', () => {
-            canvas.toBlob(blob => {
-                const formData = new FormData();
-                formData.append('file', blob, 'photo.png');
 
-                fetch('/', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(result => {
-                    resultDiv.innerHTML = result;
-                })
-                .catch(error => {
-                    console.error('Error uploading image:', error);
-                });
-            }, 'image/png');
-        });
-    </script>
+        </div>
+  
+        <!-- Stats section -->
+        <button id="new-photo" style="display:none" type="button" class="fixed bottom-16 left-1/2 transform -translate-x-1/2 inline-flex items-center rounded-full border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Tomar nueva foto</button>
+  
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

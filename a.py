@@ -16,7 +16,7 @@ img = np.array(img).reshape(-1, 64, 64, 1)
 prediction = model.predict(img)
 
 #OBTENER LA CLASE PREDICHA
-classes =['fresa','mango']
+classes =['fresa','mora','guayaba','ciruela','calabaza','tomate_v']
 predicted_classes = classes[np.argmax(prediction)]
 
 print(f'La clase predicha es: {predicted_classes}')
